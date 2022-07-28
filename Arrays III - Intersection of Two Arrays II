@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int arr[1001] = {0};
+    vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
+        vector<int>result ;
+        for(auto i : nums1){
+            arr[i]++;
+        }
+        for(auto index : nums2){
+            if(arr[index]) {
+                result.push_back(index);
+                arr[index]--;
+            }
+        }
+        
+        return result;
+    }
+};
