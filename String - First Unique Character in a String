@@ -1,0 +1,19 @@
+class Solution {
+public:
+int firstUniqChar(string s) {
+map<char,int> arr;
+for(int i=0;i<s.size();i++)
+{
+arr[s[i]]++;
+}
+for(int ip=0;ip<s.size();ip++)
+{
+if(arr[s[ip]] == 1)
+{
+return ip;
+}
+}
+return -1;
+
+}
+};
