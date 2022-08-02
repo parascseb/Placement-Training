@@ -1,0 +1,62 @@
+class Solution {
+public:
+	int rDir[4] = {-1, 0, 1, 0};
+	int cDir[4] = {0, 1, 0, -1};
+
+	int orangesRotting(vector<vector<int>>& grid) {
+		queue<pair<int, int>> q;
+		bool visited[11][11] = { {false} };
+
+		bool isExistOne = false;
+
+		for(int i=0; i<grid.size(); i++) {
+			for(int j=0; j<grid[0].size(); j++) {
+				if(grid[i][j] == 2) {
+					q.push({i, j});
+					visited[i][j] = true;
+				}
+				if(grid[i][j] == 1) {
+					isExistOne = true;
+				}
+			}
+		}
+
+		if(!isExistOne) return 0;
+
+		int ans = -1;
+		while(!q.empty()) {
+			int size = q.size();
+
+			for(int i=0; i<size; i++) {
+				pair<int, int> loc = q.front();
+				visited[loc.first][loc.second] = true;
+
+				q.pop();
+				if(grid[loc.first][loc.second] == 3) continue;
+				grid[loc.first][loc.second] = 3;
+
+				for(int k=0; k<4; k++) {
+					int nR = loc.first + rDir[k];
+					int nC = loc.second + cDir[k];
+
+					if(nR < 0 || nC < 0 || nR >= grid.size() || nC >= grid[0].size() || grid[nR][nC] != 1 || visited[nR][nC]) continue;
+
+					q.push({nR, nC});
+					visited[nR][nC] = true;                    
+				}
+			}
+				ans++; 
+		}
+
+		for(int i=0; i<grid.size(); i++) {
+			for(int j=0; j<grid[0].size(); j++) {
+				if(grid[i][j] == 1) {
+					return -1;
+				}
+			}
+		}
+
+		return ans;
+
+	}
+};
