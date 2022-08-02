@@ -1,0 +1,54 @@
+class Solution {
+public:
+    bool visited[51][51]={false};
+    int vistingNeighbours(vector<vector<int>>& grid,queue<pair<int,int>>&track){
+        int areaHere=0;
+ 
+         while(track.empty()==false){
+                   int i = track.front().first;
+                   int j = track.front().second;
+                   int szi = grid.size();
+                   int szj = grid[i].size();
+                    if(i+1<szi and visited[i+1][j]==false and grid[i+1][j]==1){
+                        track.push({i+1,j});
+                        visited[i+1][j] = true;
+                    }
+                    if(i-1>=0 and visited[i-1][j]==false and grid[i-1][j]==1){
+                        track.push({i-1,j});
+                        visited[i-1][j] = true;
+                    }
+                    if(j+1<szj and visited[i][j+1]==false and grid[i][j+1]==1){
+                        track.push({i,j+1});
+                        visited[i][j+1] = true;
+                    }
+                    if(j-1 >=0 and visited[i][j-1]==false and grid[i][j-1]==1){
+                        track.push({i,j-1});
+                        visited[i][j-1] = true;
+                    }
+                    areaHere+=1;
+                    track.pop();
+                }
+        return areaHere;
+    }
+    
+    int maxAreaOfIsland(vector<vector<int>>& grid) {
+        int maxArea=0;
+      
+        queue<pair<int,int>>track;
+      
+        for(int i=0;i<grid.size();i++){
+            for(int j=0;j<grid[i].size();j++){
+                if(grid[i][j]==1 and visited[i][j]==false){
+                    track.push({i,j});
+                    visited[i][j] = true;
+                    int visitedArea =  vistingNeighbours(grid,track);
+                    if(visitedArea>maxArea){
+                        maxArea = visitedArea;
+                    }
+                }
+               
+            }
+        }
+        return maxArea;
+    }
+};
