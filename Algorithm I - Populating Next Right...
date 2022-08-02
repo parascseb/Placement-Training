@@ -1,0 +1,19 @@
+class Solution {
+public:
+    Node* connect(Node* root) {
+        if(root == NULL) return NULL;
+        
+        //now part-1 - connect Left node with right node
+        if(root->left!=NULL) root->left->next = root->right;
+        
+        //now part-2 - connect right node with next subtree left node
+        if(root->right!=NULL && root->next!=NULL) root->right->next = root->next->left;
+        
+        //Now do the same job for subtrees
+        connect(root->left); 
+        connect(root->right);
+        
+        return root; 
+        // every time return is made, but at last the same root is retured to main
+    }
+};
