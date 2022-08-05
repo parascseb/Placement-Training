@@ -1,0 +1,20 @@
+class Solution {
+public:
+    bool dfs(TreeNode* root1,TreeNode* root2){
+        if(root1==NULL and root2 ==NULL){
+            return true;
+        }
+        else if(!root1 || !root2) return false;
+        else if(root1->val !=root2->val){
+            return false;
+        }
+        if(dfs(root1->left,root2->right) and dfs(root1->right,root2->left)) return true;
+        else return false;
+        
+    }
+    bool isSymmetric(TreeNode* root) {
+            ios_base::sync_with_stdio(false);
+            cin.tie(NULL);
+        return dfs(root->left,root->right);
+    }
+};
